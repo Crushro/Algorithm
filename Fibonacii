@@ -1,0 +1,59 @@
+/*
+    任务描述
+本关任务：用循环和递归算法求斐波那契额数列的前 10 项。
+    编程要求
+请在右侧编辑器Begin-End处补充代码，完成本关任务。
+    测试说明
+平台会对你编写的代码进行测试，比对你输出的数值与实际正确数值，只有所有数据全部计算正确才能通过测试：
+    测试输入：
+10
+    预期输出：
+递归算法求的前10项为:  1  1  2  3  5  8 13 21 34 55
+循环算法求的前10项为:  1  1  2  3  5  8 13 21 34 55
+*/
+
+#include <stdio.h>
+
+int fibo_recur(int n)
+{
+    /**********  Begin  **********/
+	if(n == 1||n == 2)
+        return 1;
+	else
+	    return fibo_recur(n-1)+fibo_recur(n-2);
+    /**********  End  **********/
+}
+
+int fibo_loop(int n)
+{
+    /**********  Begin  **********/
+	int i, res, a = 1, b = 1;
+	if(n == 1||n == 2)
+	    return 1;
+	for(i=3; i<=n; i++){
+		  res=a+b;
+		  a=b;
+		  b=res;
+	}
+	return res;
+    /**********  End  **********/
+}
+
+void main()
+{
+  int n,y,i;
+	scanf("%d",&n);
+	printf("递归算法求的前10项为:");
+	for(i = 1; i <= n; i++)
+	{
+       y=fibo_recur(i);
+       printf("%3d",y);
+	}
+    printf("\n循环算法求的前10项为:");
+	for(i = 1; i <= n; i++)
+	{
+       y=fibo_loop(i);
+       printf("%3d",y);
+	}
+}
+
