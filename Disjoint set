@@ -31,7 +31,7 @@ int find_root(int x, int parent[]){
 int union_disjointset(int x, int y, int parent[]){
 	int x_root = find_root(x,parent);
 	int y_root = find_root(y,parent);
-	if(x_root == y_root && x_root!=-1 && y_root!=-1)
+	if(x_root == y_root)
 		return 0;
 	else{
 		parent[x_root] = y_root;
