@@ -45,7 +45,6 @@ int main(){
 	scanf("%d",&c);
 	int flag[c];
 	for(i=1; i<=c; i++){
-		flag[i] = 0;
 		scanf("%d %d",&n,&m);
 		if(n<2000&&m<1000000){
 		int parent[n+1];
