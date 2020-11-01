@@ -31,7 +31,7 @@ int find_root(int x, int parent[]){
 int union_disjointset(int x, int y, int parent[]){
 	int x_root = find_root(x,parent);
 	int y_root = find_root(y,parent);
-	if(x_root == y_root)
+	if(x_root == y_root && x_root!=-1 && y_root!=-1)
 		return 0;
 	else{
 		parent[x_root] = y_root;
@@ -43,25 +43,29 @@ int main(){
 	int c,n,m;
 	int i,j,a,b;
 	scanf("%d",&c);
-	int flag[c]={0};
+	int flag[c];
 	for(i=1; i<=c; i++){
+		flag[i] = 0;
 		scanf("%d %d",&n,&m);
-		int parent[n+1];
+		if(n<2000&&m<1000000){
+					int parent[n+1];
+		int edge[m][2];
 		for(j=0; j<n+1; j++)
 			parent[j] = -1;
-		int edge[m][2];
 		for(j=0; j<m; j++){
 			scanf("%d %d",&a,&b);
 			edge[j][0] = a;
 			edge[j][1] = b;
-			if(union_disjointset(a,b,parent) == 0){
-				flag[i] = 1;
+		}
+		for(j=0; j<m; j++)
+			if(union_disjointset(edge[j][0],edge[j][1],parent) == 0){
+				flag[i-1] = 1;
 				break;
 			}
 		}
 	}
 	for(i=1; i<=c; i++)
-		if(flag[i] == 1)
+		if(flag[i-1] == 1)
 			printf("testcase %d:发现同性恋\n",i);
 		else 
 			printf("testcase %d:没有发现同性恋\n",i);
