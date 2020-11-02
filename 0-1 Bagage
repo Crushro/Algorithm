@@ -21,7 +21,7 @@ x[]=0 0 1 1 0
 
 #include<stdio.h>
 #define max(a,b) a>b?a:b
-int D[100][100];
+int D[20][10000];
 int Fill_D(int n,int C,int w[],int v[]){
 	int i,j;
 	for(i=1;i<=n;i++)
@@ -31,8 +31,11 @@ int Fill_D(int n,int C,int w[],int v[]){
 	return 1;
 }
 void knapsack(int n,int C,int w[],int v[],int x[]){
-	int i,j;
-	Fill_D(n,C,w,v);
+	int i,j,W[n+1],V[n+1];
+	for(i=n;i>0;i--)	W[i] = w[i-1];
+	for(j=n;j>0;j--)	V[j] = v[j-1];
+	W[0] =0; V [0] =0;
+	Fill_D(n,C,W,V);
 	i=n;j=C;
 	while(i>0)
 		if(D[i][j] == D[i-1][j]){
@@ -41,17 +44,24 @@ void knapsack(int n,int C,int w[],int v[],int x[]){
 		}
 		else{
 			x[i] = 1;
-			j-=w[i];
+			j-=W[i];
 			i--;
 		}
+	for(i=0;i<n;i++){
+		x[i] = x[i+1];
+	}
+	x[i] = 0;
 }
-
+/*test
 int main(){
-	int n = 5,C=100,x[100],w[]={77,22,29,50,99},v[]={92,22,87,46,90};
-	int i,j;
+	int n = 8,C=200,x[100],w[]={79,58,86,11,28,62,15,68},v[]={83,14,54,79,72,52,48,62};
+	int i,j,count = 0;
 	knapsack(n,C,w,v,x);
-	for(i=0;i<n;i++)
-		for(j=0;j<n;j++)
-			printf("%d ",D[i][j]);
+	for(i=0;i<n;i++){
+	printf("%d ",x[i]);	
+	count += v[i]*x[i];	
+	}
+	printf("\n%d",count);
 	return 0;
 }
+*/
