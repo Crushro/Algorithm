@@ -1,0 +1,67 @@
+/*
+    任务描述
+本关任务：小张最近很忙，记事本里有n件事情等待处理，每件事处理完毕后，能得到不同的奖励，而且都有一个截止日。一件事处理需要一整天
+时间，并且小张不能同时干其他事情。请你替小张安排一个事情处理的时间表，争取获得最大的奖励。
+    相关知识
+为了完成本关任务，你需要掌握：贪心算法。
+    编程要求
+根据提示，在右侧编辑器编写代码。
+    测试说明
+平台会对你编写的代码进行测试：
+测试输入：第一行输入整数n,表示n个事情。随后输入n行，每行包括一个事情的截止日（不大于n）和处理收益。
+测试输出：输出最大的总收益。
+    测试输入：
+5
+2 5
+2 7
+2 6
+2 8
+3 3
+    预期输出：
+18
+*/
+
+#include<stdio.h>
+struct event{
+	int deadline;//期限
+	int value;//价值
+};
+
+int main(){
+	int n,i,j,sum = 0,lastday = 0,arrange[1000];
+	event e[1000];
+	scanf("%d",&n);
+	for(i=1; i<=n; i++){
+		scanf("%d%d",&e[i].deadline,&e[i].value);
+		if(lastday<e[i].deadline)
+			lastday = e[i].deadline;//找出期限最大值
+	}
+	event temp;
+    //冒泡排序,使价值从大到小排序
+	for(i=1;i<n;i++)
+		for(j=1;j<n-1;j++){
+			if(e[j].value<e[j+1].value){
+				temp = e[j];
+				e[j] = e[j+1];
+				e[j+1] = temp;
+			}
+		}
+	for(i=1;i<=n;i++){
+		if(arrange[e[i].deadline] == 0)
+			arrange[e[i].deadline] =e[i].value;
+            //如果期限那天没有安排事件，则安排该事件
+		else{
+			for(j=e[i].deadline-1;j>=1;j--){
+				if(arrange[j] == 0){
+				arrange[j] = e[i].value;
+				break;
+				}
+			}
+            //如果期限那天被安排了，那么事件只能往前安排
+		}
+	}
+	for(i=1;i<=lastday;i++)
+	sum+=arrange[i];//计算价值最大值
+	printf("%d",sum);
+	return 0;
+} 
