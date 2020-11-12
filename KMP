@@ -1,0 +1,25 @@
+#include<stdio.h>
+//前缀表
+void prefix_table(char pattern[], int prefix[], int n){
+	prefix[0] = 0;
+	Int Len = 0;
+	Int I = 1;
+	while(I<n){
+	if(pattern[i] == pattern[len]){
+	Len++;
+	prefix[i] = Len;
+	I++;
+	}
+	else {
+	if(Len > 0)
+	Len = prefix[len - 1];
+	}
+	else{
+	prefix[i] = Len;
+	i++;
+	}
+}
+
+Int main(){
+	return 0;
+}
